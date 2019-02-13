@@ -1,42 +1,167 @@
-<%= form_with(model: entry, local: true) do |form| %>
-  <% if entry.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
+<%= form_with(model: entry, local: true, class: "text-light bg-dark p-3 my-3 rounded border") do |form| %>
 
-      <ul>
-      <% entry.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <% if entry.errors.any? %>
+    <div class="row">
+      <div class="col-12">
+        <div class="bg-danger text-white p-2 rounded mb-3">
+          <h6><%= pluralize(entry.errors.count, "error") %> prevented this entry from being saved:</h6>
+          <ul class="mb-0">
+            <% entry.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :entry_on %>
-    <%= form.date_select :entry_on %>
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="form-group">
+        <%= form.label :entry_on, "Date:" %>
+        <%= form.date_field :entry_on, class: (entry.errors[:entry_on].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="form-group">
+        <%= form.label :weight, "Weight:" %>
+        <%= form.number_field :weight, class: (entry.errors[:weight].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="form-group">
+        <%= form.label :steps, "Steps:" %>
+        <%= form.number_field :steps, class: (entry.errors[:steps].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 1 %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :closed_move_ring %>
-    <%= form.check_box :closed_move_ring %>
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <fieldset class="form-group">
+        <legend class="mb-1">Daily Checks</legend>
+        <div class="custom-control custom-checkbox">
+          <%= form.check_box :tracked_food, class: (entry.errors[:tracked_food].blank? ? "" : "is-invalid ") + "custom-control-input" %>
+          <%= form.label :tracked_food, "Tracked all food", class: "custom-control-label" %>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <%= form.check_box :stayed_under_calorie_goal, class: (entry.errors[:stayed_under_calorie_goal].blank? ? "" : "is-invalid ") + "custom-control-input" %>
+          <%= form.label :stayed_under_calorie_goal, "Stayed under calorie goal", class: "custom-control-label" %>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <%= form.check_box :closed_move_ring, class: (entry.errors[:closed_move_ring].blank? ? "" : "is-invalid ") + "custom-control-input" %>
+          <%= form.label :closed_move_ring, "Closed move ring", class: "custom-control-label" %>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <%= form.check_box :closed_exercise_ring, class: (entry.errors[:closed_exercise_ring].blank? ? "" : "is-invalid ") + "custom-control-input" %>
+          <%= form.label :closed_exercise_ring, "Closed exercise ring", class: "custom-control-label" %>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <%= form.check_box :closed_stand_ring, class: (entry.errors[:closed_stand_ring].blank? ? "" : "is-invalid ") + "custom-control-input" %>
+          <%= form.label :closed_stand_ring, "Closed stand ring", class: "custom-control-label" %>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <%= form.check_box :went_to_gym, class: (entry.errors[:went_to_gym].blank? ? "" : "is-invalid ") + "custom-control-input" %>
+          <%= form.label :went_to_gym, "Went to gym", class: "custom-control-label" %>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <%= form.check_box :met_sleep_goal, class: (entry.errors[:met_sleep_goal].blank? ? "" : "is-invalid ") + "custom-control-input" %>
+          <%= form.label :met_sleep_goal, "Met sleep goal", class: "custom-control-label" %>
+        </div>
+      </fieldset>
+    </div>
+    <div class="col-12 col-md-4">
+      <fieldset class="form-group">
+        <legend class="mb-1">Calorie Tracking</legend>
+        <div class="form-row">
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :total_calories_consumed, "Consumed:" %>
+              <%= form.number_field :total_calories_consumed, class: (entry.errors[:total_calories_consumed].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 1 %>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :total_calories_burned, "Burned:" %>
+              <%= form.number_field :total_calories_burned, class: (entry.errors[:total_calories_burned].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 1 %>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :active_calories_burned, "Active:" %>
+              <%= form.number_field :active_calories_burned, class: (entry.errors[:active_calories_burned].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 1 %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="col-12 col-md-4">
+      <fieldset class="form-group">
+        <legend class="mb-1">Measurements</legend>
+        <div class="form-row">
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :calf_measurement, "Calf:" %>
+              <%= form.number_field :calf_measurement, class: (entry.errors[:calf_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.25 %>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :thigh_measurement, "Thigh:" %>
+              <%= form.number_field :thigh_measurement, class: (entry.errors[:thigh_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.25 %>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :waist_measurement, "Waist:" %>
+              <%= form.number_field :waist_measurement, class: (entry.errors[:waist_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.25 %>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :stomach_measurement, "Stomach:" %>
+              <%= form.number_field :stomach_measurement, class: (entry.errors[:stomach_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.25 %>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :shoulder_measurement, "Shoulders:" %>
+              <%= form.number_field :shoulder_measurement, class: (entry.errors[:shoulder_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.25 %>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :arm_measurement, "Arm:" %>
+              <%= form.number_field :arm_measurement, class: (entry.errors[:arm_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.25 %>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <%= form.label :neck_measurement, "Neck:" %>
+              <%= form.number_field :neck_measurement, class: (entry.errors[:neck_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.25 %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :steps %>
-    <%= form.number_field :steps %>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <%= form.label :notes, "Notes:" %>
+        <%= form.text_area :notes, class: (entry.errors[:notes].blank? ? "" : "is-invalid ") + "form-control" %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :weight %>
-    <%= form.text_field :weight %>
+  <div class="row">
+    <div class="col-12">
+      <div class="float-right">
+        <%= link_to fa_icon("arrow-left", text: "Cancel"), entries_url, class: "btn btn-sm btn-light" %>
+        <button type="submit" class="btn btn-sm btn-primary"><%= fa_icon "check", text: "Submit" %></button>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_area :notes %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

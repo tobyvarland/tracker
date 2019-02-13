@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_12_195828) do
+ActiveRecord::Schema.define(version: 2019_02_13_200038) do
 
   create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "entry_on", null: false
@@ -37,6 +37,17 @@ ActiveRecord::Schema.define(version: 2019_02_12_195828) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["entry_on"], name: "index_entries_on_entry_on"
+  end
+
+  create_table "versions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "item_type", limit: 191, null: false
+    t.integer "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object", limit: 4294967295
+    t.datetime "created_at"
+    t.text "object_changes", limit: 4294967295
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
 end

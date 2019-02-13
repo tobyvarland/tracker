@@ -1,78 +1,93 @@
-<h3 class="mb-3">Raw Entry Listing</h3>
+<div class="row">
 
-<p class="single-line">
-  <%= link_to fa_icon("plus", text: "New"),
-              new_entry_path,
-              class: "btn btn-small btn-success" %>
-</p>
-<div class="table-responsive">
-  <table class="table table-bordered table-sm">
-    <thead>
-      <tr>
-        <th class="text-center">Date</th>
-        <th>Daily Flags</th>
-        <th>Notes</th>
-        <th class="text-center">Options</th>
-      </tr>
-    </thead>
-    <tfoot>
-      <tr class="small">
-        <td>&nbsp;</td>
-        <td>
-          <div class="row">
-            <div class="col-4"><%= fa_icon("cutlery", text: '<span class="text-muted">Tracked Food</span>'.html_safe, class: "fa-fw") %></div>
-            <div class="col-4"><%= fa_icon("pie-chart", text: '<span class="text-muted">Calorie Goal</span>'.html_safe, class: "fa-fw") %></div>
-            <div class="col-4"><%= fa_icon("bolt", text: '<span class="text-muted">Move Ring</span>'.html_safe, class: "fa-fw") %></div>
-            <div class="col-4"><%= fa_icon("bicycle", text: '<span class="text-muted">Exercise Ring</span>'.html_safe, class: "fa-fw") %></div>
-            <div class="col-4"><%= fa_icon("arrow-up", text: '<span class="text-muted">Stand Ring</span>'.html_safe, class: "fa-fw") %></div>
-            <div class="col-4"><%= fa_icon("trophy", text: '<span class="text-muted">Gym</span>'.html_safe, class: "fa-fw") %></div>
-            <div class="col-4"><%= fa_icon("bed", text: '<span class="text-muted">Sleep Goal</span>'.html_safe, class: "fa-fw") %></div>
-          </div>
-        </td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
-    </tfoot>
-    <tbody>
-      <tr>
-        <td>&nbsp;</td>
-        <td>
-          <% 7.times do %>
-            <span class="fa-stack fa-fw">
-              <%= fa_icon("cutlery", class: "fa-stack-1x text-muted") %>
-              <%= fa_icon("ban", class: "fa-stack-2x text-danger") %>
-            </span>
+  <div class="col-12 col-md-10">
+
+    <h3 class="my-3">Daily Log</h3>
+
+    <div class="h-500p" id="weight-chart" data-entries="<%= @entries.to_json %>">
+    </div>
+
+    <p class="lh-1">
+      <%= link_to fa_icon("plus", text: "New"),
+                  new_entry_path,
+                  class: "btn btn-sm btn-success" %>
+    </p>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th class="text-center nw w-1">Date</th>
+            <th class="text-center nw w-1">Daily Flags</th>
+            <th class="text-center nw w-1 lh-1">Calories<br><small class="text-muted">Consumed / Burned / Active</small></th>
+            <th class="text-center nw w-1">Weight</th>
+            <th class="text-center nw w-1">Steps</th>
+            <th class="text-center nw w-1 lh-1">Measurements<br><small class="text-muted">Calf / Thigh / Waist / Stomach / Shoulders / Arm / Neck</small></th>
+            <th>Notes</th>
+            <th class="text-center nw w-1">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @entries.each do |entry| %>
+            <tr class="<%= entry.entry_on == Date.today ? "table-warning" : nil %>" id="entry-<%= entry.id %>">
+              <td class="text-center nw"><%= entry.entry_on.strftime "%m/%d/%y" %></td>
+              <td class="text-center nw">
+                <%= daily_flag_icons  entry.tracked_food,
+                                      entry.stayed_under_calorie_goal,
+                                      entry.closed_move_ring,
+                                      entry.closed_exercise_ring,
+                                      entry.closed_stand_ring,
+                                      entry.went_to_gym,
+                                      entry.met_sleep_goal %>
+                <br>
+                <%= grade_bar(entry) %>
+              </td>
+              <td class="text-center nw">
+                <% if entry.calories_entered? %>
+                  <%= sep_list  number_with_delimiter(entry.total_calories_consumed),
+                                number_with_delimiter(entry.total_calories_burned),
+                                number_with_delimiter(entry.active_calories_burned) %>
+                <% else %>
+                  &nbsp;
+                <% end %>
+              </td>
+              <td class="text-center nw">
+                <% if entry.weight.nil? %>
+                  &nbsp;
+                <% else %>
+                  <%= number_with_precision(entry.weight, precision: 1) %> lbs
+                  <%= weight_change(entry) %>
+                <% end %>
+              </td>
+              <td class="text-center nw"><%= entry.steps.nil? ? "&nbsp;".html_safe : number_with_delimiter(entry.steps) %></td>
+              <td class="text-center nw">
+                <% if entry.measurements_entered? %>
+                  <%= sep_list  "#{number_with_precision(entry.calf_measurement, precision: 2)}&Prime;",
+                                "#{number_with_precision(entry.thigh_measurement, precision: 2)}&Prime;",
+                                "#{number_with_precision(entry.waist_measurement, precision: 2)}&Prime;",
+                                "#{number_with_precision(entry.stomach_measurement, precision: 2)}&Prime;",
+                                "#{number_with_precision(entry.shoulder_measurement, precision: 2)}&Prime;",
+                                "#{number_with_precision(entry.arm_measurement, precision: 2)}&Prime;",
+                                "#{number_with_precision(entry.neck_measurement, precision: 2)}&Prime;" %>
+                  <%= measurement_change(entry) %>
+                <% else %>
+                  &nbsp;
+                <% end %>
+              </td>
+              <td><%= entry.notes.nil? ? "&nbsp;".html_safe : entry.notes.html_safe %></td>
+              <td class="nw">
+                <div class="btn-group btn-group-sm" role="group">
+                  <%= link_to fa_icon("pencil"), edit_entry_path(entry), class: "btn btn-dark" %>
+                  <%= link_to fa_icon("times"), entry, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to delete this entry?" } %>
+                </div>
+              </td>
+            </tr>
           <% end %>
-        </td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td>
-          <% 7.times do %>
-            <span class="fa-stack fa-fw">
-              <%= fa_icon("cutlery", class: "fa-stack-1x") %>
-            </span>
-          <% end %>
-        </td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
-      <% @entries.each do |entry| %>
-        <tr>
-          <td><%= entry.entry_on %></td>
-          <td>
-            <%= fa_icon("cutlery", class: "fa-fw") %>
-          </td>
-          <td><%= entry.notes %></td>
-          <td>
-            <%= link_to 'Show', entry %>
-            <%= link_to 'Edit', edit_entry_path(entry) %>
-            <%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <%= render partial: "stats" %>
+
 </div>
