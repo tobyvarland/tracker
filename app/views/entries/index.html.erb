@@ -1,0 +1,78 @@
+<h3 class="mb-3">Raw Entry Listing</h3>
+
+<p class="single-line">
+  <%= link_to fa_icon("plus", text: "New"),
+              new_entry_path,
+              class: "btn btn-small btn-success" %>
+</p>
+<div class="table-responsive">
+  <table class="table table-bordered table-sm">
+    <thead>
+      <tr>
+        <th class="text-center">Date</th>
+        <th>Daily Flags</th>
+        <th>Notes</th>
+        <th class="text-center">Options</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr class="small">
+        <td>&nbsp;</td>
+        <td>
+          <div class="row">
+            <div class="col-4"><%= fa_icon("cutlery", text: '<span class="text-muted">Tracked Food</span>'.html_safe, class: "fa-fw") %></div>
+            <div class="col-4"><%= fa_icon("pie-chart", text: '<span class="text-muted">Calorie Goal</span>'.html_safe, class: "fa-fw") %></div>
+            <div class="col-4"><%= fa_icon("bolt", text: '<span class="text-muted">Move Ring</span>'.html_safe, class: "fa-fw") %></div>
+            <div class="col-4"><%= fa_icon("bicycle", text: '<span class="text-muted">Exercise Ring</span>'.html_safe, class: "fa-fw") %></div>
+            <div class="col-4"><%= fa_icon("arrow-up", text: '<span class="text-muted">Stand Ring</span>'.html_safe, class: "fa-fw") %></div>
+            <div class="col-4"><%= fa_icon("trophy", text: '<span class="text-muted">Gym</span>'.html_safe, class: "fa-fw") %></div>
+            <div class="col-4"><%= fa_icon("bed", text: '<span class="text-muted">Sleep Goal</span>'.html_safe, class: "fa-fw") %></div>
+          </div>
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+          <% 7.times do %>
+            <span class="fa-stack fa-fw">
+              <%= fa_icon("cutlery", class: "fa-stack-1x text-muted") %>
+              <%= fa_icon("ban", class: "fa-stack-2x text-danger") %>
+            </span>
+          <% end %>
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+          <% 7.times do %>
+            <span class="fa-stack fa-fw">
+              <%= fa_icon("cutlery", class: "fa-stack-1x") %>
+            </span>
+          <% end %>
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <% @entries.each do |entry| %>
+        <tr>
+          <td><%= entry.entry_on %></td>
+          <td>
+            <%= fa_icon("cutlery", class: "fa-fw") %>
+          </td>
+          <td><%= entry.notes %></td>
+          <td>
+            <%= link_to 'Show', entry %>
+            <%= link_to 'Edit', edit_entry_path(entry) %>
+            <%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

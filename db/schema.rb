@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_02_12_195828) do
 
-  create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "entry_on", null: false
     t.boolean "tracked_food", default: false
     t.boolean "stayed_under_calorie_goal", default: false
