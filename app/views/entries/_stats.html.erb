@@ -47,9 +47,9 @@
       <li class="list-group-item">
         Records
         <ul>
-          <% unless @max_total_calories.nil? %><li>Total Calories: <a href="#entry-<%= @max_total_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_total_calories.total_calories_burned) %> (<%= @max_total_calories.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
-          <% unless @max_active_calories.nil? %><li>Active Calories: <a href="#entry-<%= @max_active_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_active_calories.active_calories_burned) %> (<%= @max_active_calories.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
-          <% unless @max_steps.nil? %><li>Steps: <a href="#entry-<%= @max_steps.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_steps.steps) %> (<%= @max_steps.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
+          <% unless @max_total_calories.nil? %><li>Total Calories:<br><a href="#entry-<%= @max_total_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_total_calories.total_calories_burned) %> (<%= @max_total_calories.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
+          <% unless @max_active_calories.nil? %><li>Active Calories:<br><a href="#entry-<%= @max_active_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_active_calories.active_calories_burned) %> (<%= @max_active_calories.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
+          <% unless @max_steps.nil? %><li>Steps:<br><a href="#entry-<%= @max_steps.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_steps.steps) %> (<%= @max_steps.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
         </ul>
       </li>
     <% end %>
