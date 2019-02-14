@@ -1,0 +1,42 @@
+<%= form_with(model: projection, local: true, class: "text-light bg-dark p-3 my-3 rounded border") do |form| %>
+
+  <% if projection.errors.any? %>
+    <div class="row">
+      <div class="col-12">
+        <div class="bg-danger text-white p-2 rounded mb-3">
+          <h6><%= pluralize(projection.errors.count, "error") %> prevented this projection from being saved:</h6>
+          <ul class="mb-0">
+            <% projection.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-12 col-sm-6">
+      <div class="form-group">
+        <%= form.label :projection_date, "Date:" %>
+        <%= form.date_field :projection_date, class: (projection.errors[:projection_date].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6">
+      <div class="form-group">
+        <%= form.label :label, "Label:" %>
+        <%= form.text_field :label, class: (projection.errors[:label].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="float-right">
+        <%= link_to fa_icon("arrow-left", text: "Cancel"), projections_url, class: "btn btn-sm btn-light" %>
+        <button type="submit" class="btn btn-sm btn-primary"><%= fa_icon "check", text: "Submit" %></button>
+      </div>
+    </div>
+  </div>
+
+<% end %>

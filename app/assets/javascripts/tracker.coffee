@@ -45,7 +45,7 @@ process_charts = ->
   debug "Formatting entry dates."
   for entry in raw_entries
     do ->
-      date_parts = entry.entry_on.split "-"
+      date_parts = entry.entry_date.split "-"
       entry.formatted_date = new Date(date_parts[0], date_parts[1] - 1, date_parts[2])
   debug raw_entries
 

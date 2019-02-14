@@ -18,8 +18,8 @@
   <div class="row">
     <div class="col-12 col-sm-6 col-md-3">
       <div class="form-group">
-        <%= form.label :entry_on, "Date:" %>
-        <%= form.date_field :entry_on, class: (entry.errors[:entry_on].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
+        <%= form.label :entry_date, "Date:" %>
+        <%= form.date_field :entry_date, class: (entry.errors[:entry_date].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-3">

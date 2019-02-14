@@ -8,7 +8,7 @@ class EntriesController < ApplicationController
   def charts
 
     # Retrieve all entries for graphing.
-    @entries = Entry.all.order(:entry_on)
+    @entries = Entry.all.order(:entry_date)
 
   end
 
@@ -16,12 +16,12 @@ class EntriesController < ApplicationController
   def index
 
     # Retrieve all entries for display.
-    @entries = Entry.all.order(entry_on: :desc)
+    @entries = Entry.all.order(entry_date: :desc)
 
     # Calculate stats.
     unless @entries.count == 0
       @first_entry = @entries.last
-      @days_since_first_entry = (Date.today - @first_entry.entry_on).to_i
+      @days_since_first_entry = (Date.today - @first_entry.entry_date).to_i
       @weeks_since_first_entry = @days_since_first_entry / 7.0
       @tracking_rate = 100 * (@entries.count / (1.0 * (@days_since_first_entry + 1)))
       @total_flags = @entries.sum(&:flag_score)
@@ -145,7 +145,7 @@ private
 
   # Define permissable parameters.
   def entry_params
-    params.require(:entry).permit(:entry_on,
+    params.require(:entry).permit(:entry_date,
                                   :tracked_food,
                                   :stayed_under_calorie_goal,
                                   :closed_move_ring,

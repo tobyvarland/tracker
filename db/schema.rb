@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_13_200038) do
+ActiveRecord::Schema.define(version: 2019_02_14_202101) do
 
   create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.date "entry_on", null: false
+    t.date "entry_date", null: false
     t.boolean "tracked_food", default: false
     t.boolean "stayed_under_calorie_goal", default: false
     t.boolean "closed_move_ring", default: false
@@ -37,7 +37,15 @@ ActiveRecord::Schema.define(version: 2019_02_13_200038) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["entry_on"], name: "index_entries_on_entry_on"
+    t.index ["entry_date"], name: "index_entries_on_entry_date"
+  end
+
+  create_table "projections", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "projection_date", null: false
+    t.string "label", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["projection_date"], name: "index_projections_on_projection_date"
   end
 
   create_table "versions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

@@ -4,7 +4,7 @@ class Entry < ApplicationRecord
   has_paper_trail
 
   # Validation.
-  validates :entry_on,
+  validates :entry_date,
             presence: true,
             uniqueness: true
   validates :steps,
@@ -51,7 +51,7 @@ class Entry < ApplicationRecord
   # Callbacks.
   after_initialize :make_for_today, if: :new_record?
   def make_for_today
-    self.entry_on ||= Date.today
+    self.entry_date ||= Date.today
   end
 
   # Methods.
@@ -63,19 +63,19 @@ class Entry < ApplicationRecord
   end
   def weight_change
     return nil if weight.nil?
-    previous = Entry.where.not(weight: nil, id: id).where(["entry_on < ?", entry_on]).order(entry_on: :desc).first
+    previous = Entry.where.not(weight: nil, id: id).where(["entry_date < ?", entry_date]).order(entry_date: :desc).first
     return nil if previous.nil?
     return weight - previous.weight
   end
   def body_fat_change
     return nil if body_fat.nil?
-    previous = Entry.where.not(body_fat: nil, id: id).where(["entry_on < ?", entry_on]).order(entry_on: :desc).first
+    previous = Entry.where.not(body_fat: nil, id: id).where(["entry_date < ?", entry_date]).order(entry_date: :desc).first
     return nil if previous.nil?
     return body_fat - previous.body_fat
   end
   def measurement_changes
     return nil if calf_measurement.nil?
-    previous = Entry.where.not(calf_measurement: nil, id: id).where(["entry_on < ?", entry_on]).order(entry_on: :desc).first
+    previous = Entry.where.not(calf_measurement: nil, id: id).where(["entry_date < ?", entry_date]).order(entry_date: :desc).first
     return nil if previous.nil?
     return [
       calf_measurement - previous.calf_measurement,
@@ -104,7 +104,7 @@ class Entry < ApplicationRecord
   end
   def bmi_change
     return nil if weight.nil?
-    previous = Entry.where.not(weight: nil, id: id).where(["entry_on < ?", entry_on]).order(entry_on: :desc).first
+    previous = Entry.where.not(weight: nil, id: id).where(["entry_date < ?", entry_date]).order(entry_date: :desc).first
     return nil if previous.nil?
     return bmi - previous.bmi
   end

@@ -27,11 +27,11 @@
         </thead>
         <tbody>
           <% @entries.each do |entry| %>
-            <tr class="<%= entry.entry_on == Date.today ? "table-warning" : nil %>" id="entry-<%= entry.id %>">
+            <tr class="<%= entry.entry_date == Date.today ? "table-warning" : nil %>" id="entry-<%= entry.id %>">
               <td class="text-center nw">
-                <%= entry.entry_on.strftime "%m/%d/%y" %>
+                <%= entry.entry_date.strftime "%m/%d/%y" %>
                 <br>
-                <small class="text-uncolor">(<%= entry.entry_on.strftime "%a" %>)</small>
+                <small class="text-uncolor">(<%= entry.entry_date.strftime "%a" %>)</small>
               </td>
               <td class="text-center nw">
                 <%= daily_flag_icons  entry.tracked_food,

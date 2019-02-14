@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :projections
   resources :entries do
     get "charts", on: :collection
   end

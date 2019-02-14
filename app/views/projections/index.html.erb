@@ -1,0 +1,71 @@
+<div class="row">
+
+  <div class="col-12">
+
+    <h3 class="my-3">Projections</h3>
+
+    <p>Based on current weight of <strong><%= @current_weight %> pounds</strong> and target weight of <strong><%= @target_weight %> pounds</strong>.</p>
+
+    <p class="lh-1">
+      <%= link_to fa_icon("plus", text: "New"),
+                  new_projection_path,
+                  class: "btn btn-sm btn-dark" %>
+    </p>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th rowspan="2" class="text-center nw w-1">Date</th>
+            <th rowspan="2" class="nw">Label</th>
+            <th rowspan="2" class="text-center nw w-1">Days Away</th>
+            <th rowspan="2" class="text-center nw w-1">Weeks Away</th>
+            <th colspan="7" class="text-center nw">Weight Loss Rate <small class="text-muted">(#/week)</small></th>
+            <th rowspan="2" class="text-center nw w-1">Options</th>
+          </tr>
+          <tr>
+            <th class="text-center nw w-1 text-warning"><%= number_with_precision(@current_rate, precision: 1) %></th>
+            <th class="text-center nw w-1">-3</th>
+            <th class="text-center nw w-1">-2.5</th>
+            <th class="text-center nw w-1">-2</th>
+            <th class="text-center nw w-1">-1.5</th>
+            <th class="text-center nw w-1">-1</th>
+            <th class="text-center nw w-1">-0.5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @projections.each do |projection| %>
+            <tr class="<%= projection.projection_date == Date.today ? "table-warning" : nil %>" id="projection-<%= projection.id %>">
+              <td class="text-center nw">
+                <%= projection.projection_date.strftime "%m/%d/%y" %>
+              </td>
+              <td class="nw">
+                <%= projection.label %>
+              </td>
+              <td class="text-center nw">
+                <%= projection.days_away %>
+              </td>
+              <td class="text-center nw">
+                <%= number_with_precision(projection.weeks_away, precision: 2) %>
+              </td>
+              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, @current_rate, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -3, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -2.5, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -2, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -1.5, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -1, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -0.5, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <td class="nw">
+                <div class="btn-group btn-group-sm" role="group">
+                  <%= link_to fa_icon("pencil"), edit_projection_path(projection), class: "btn btn-dark" %>
+                  <%= link_to fa_icon("times"), projection, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to delete this projection?" } %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>

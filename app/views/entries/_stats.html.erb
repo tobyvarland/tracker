@@ -10,7 +10,7 @@
     <% end %>
     <% unless @first_entry.nil? %>
       <li class="list-group-item">
-        Started Tracking: <strong><%= @first_entry.entry_on.strftime "%m/%d/%y" %></strong><br>
+        Started Tracking: <strong><%= @first_entry.entry_date.strftime "%m/%d/%y" %></strong><br>
         Total Days Tracked: <strong><%= number_with_delimiter(@entries.count) %></strong><br>
         Tracking Rate: <strong><%= @tracking_rate.to_i %>%</strong><br>
       </li>
@@ -53,9 +53,9 @@
       <li class="list-group-item">
         Records
         <ul>
-          <% unless @max_total_calories.nil? %><li>Total Calories:<br><a href="#entry-<%= @max_total_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_total_calories.total_calories_burned) %> (<%= @max_total_calories.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
-          <% unless @max_active_calories.nil? %><li>Active Calories:<br><a href="#entry-<%= @max_active_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_active_calories.active_calories_burned) %> (<%= @max_active_calories.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
-          <% unless @max_steps.nil? %><li>Steps:<br><a href="#entry-<%= @max_steps.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_steps.steps) %> (<%= @max_steps.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
+          <% unless @max_total_calories.nil? %><li>Total Calories:<br><a href="#entry-<%= @max_total_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_total_calories.total_calories_burned) %> (<%= @max_total_calories.entry_date.strftime "%m/%d/%y" %>)</a></li><% end %>
+          <% unless @max_active_calories.nil? %><li>Active Calories:<br><a href="#entry-<%= @max_active_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_active_calories.active_calories_burned) %> (<%= @max_active_calories.entry_date.strftime "%m/%d/%y" %>)</a></li><% end %>
+          <% unless @max_steps.nil? %><li>Steps:<br><a href="#entry-<%= @max_steps.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_steps.steps) %> (<%= @max_steps.entry_date.strftime "%m/%d/%y" %>)</a></li><% end %>
         </ul>
       </li>
     <% end %>
