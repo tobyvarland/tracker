@@ -57,8 +57,10 @@ draw_weight_chart = ->
     vAxis: {
       title: "Pounds",
       format: "decimal",
+      maxValue: 350,
       minValue: 200,
       viewWindow: {
+        max: 350,
         min: 200
       }
     }
