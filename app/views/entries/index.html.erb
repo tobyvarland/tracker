@@ -4,8 +4,7 @@
 
     <h3 class="my-3">Daily Log</h3>
 
-    <div class="h-500p" id="weight-chart" data-entries="<%= @entries.to_json %>">
-    </div>
+    <%= render partial: "charts" %>
 
     <p class="lh-1">
       <%= link_to fa_icon("plus", text: "New"),
@@ -54,20 +53,20 @@
                 <% if entry.weight.nil? %>
                   &nbsp;
                 <% else %>
-                  <%= number_with_precision(entry.weight, precision: 1) %> lbs
+                  <%= number_with_precision(entry.weight, precision: 1) %> #
                   <%= weight_change(entry) %>
                 <% end %>
               </td>
               <td class="text-center nw"><%= entry.steps.nil? ? "&nbsp;".html_safe : number_with_delimiter(entry.steps) %></td>
               <td class="text-center nw">
                 <% if entry.measurements_entered? %>
-                  <%= sep_list  "#{number_with_precision(entry.calf_measurement, precision: 2)}&Prime;",
-                                "#{number_with_precision(entry.thigh_measurement, precision: 2)}&Prime;",
-                                "#{number_with_precision(entry.waist_measurement, precision: 2)}&Prime;",
-                                "#{number_with_precision(entry.stomach_measurement, precision: 2)}&Prime;",
-                                "#{number_with_precision(entry.shoulder_measurement, precision: 2)}&Prime;",
-                                "#{number_with_precision(entry.arm_measurement, precision: 2)}&Prime;",
-                                "#{number_with_precision(entry.neck_measurement, precision: 2)}&Prime;" %>
+                  <%= sep_list  "#{number_with_precision(entry.calf_measurement, precision: 1)}&Prime;",
+                                "#{number_with_precision(entry.thigh_measurement, precision: 1)}&Prime;",
+                                "#{number_with_precision(entry.waist_measurement, precision: 1)}&Prime;",
+                                "#{number_with_precision(entry.stomach_measurement, precision: 1)}&Prime;",
+                                "#{number_with_precision(entry.shoulder_measurement, precision: 1)}&Prime;",
+                                "#{number_with_precision(entry.arm_measurement, precision: 1)}&Prime;",
+                                "#{number_with_precision(entry.neck_measurement, precision: 1)}&Prime;" %>
                   <%= measurement_change(entry) %>
                 <% else %>
                   &nbsp;
@@ -88,6 +87,8 @@
 
   </div>
 
-  <%= render partial: "stats" %>
+  <div class="col-12 col-md-2">
+    <%= render partial: "stats" %>
+  </div>
 
 </div>

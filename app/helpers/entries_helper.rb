@@ -53,7 +53,7 @@ module EntriesHelper
   def weight_change(entry)
     change = entry.weight_change
     return if change.nil? || change == 0
-    "<br><small class=\"font-weight-bold #{prefer_negative_class(change)}\">#{number_with_precision(change, precision: 1)} lbs</small>".html_safe
+    "<br><small class=\"font-weight-bold #{prefer_negative_class(change)}\">#{number_with_precision(change, precision: 1)} #</small>".html_safe
   end
 
   # Prints measurement changes.
@@ -62,7 +62,7 @@ module EntriesHelper
     return if changes.nil? || changes.all? {|c| c== 0}
     values = []
     (0..6).each do |i|
-      values << "<small class=\"font-weight-bold #{prefer_negative_class(changes[i])}\">#{number_with_precision(changes[i], precision: 2)}&Prime;</small>"
+      values << "<small class=\"font-weight-bold #{prefer_negative_class(changes[i])}\">#{number_with_precision(changes[i], precision: 1)}&Prime;</small>"
     end
     "<br>#{sep_list values}".html_safe
   end

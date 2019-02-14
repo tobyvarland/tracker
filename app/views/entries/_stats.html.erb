@@ -1,44 +1,57 @@
-<div class="col-12 col-md-2">
-  <div class="card my-3">
-    <div class="card-header bg-dark text-warning font-weight-bold">
-      <%= fa_icon "line-chart", text: "Statistics" %>
-    </div>
-    <ul class="list-group list-group-flush">
+<div class="card my-3">
+  <div class="card-header bg-dark text-warning font-weight-bold">
+    <%= fa_icon "certificate", text: "Statistics" %>
+  </div>
+  <ul class="list-group list-group-flush small">
+    <% if @entries.count == 0 %>
+      <li class="list-group-item text-muted font-italic small">
+        Stats will be available once entries are made.
+      </li>
+    <% end %>
+    <% unless @first_entry.nil? %>
       <li class="list-group-item">
         Started Tracking: <strong><%= @first_entry.entry_on.strftime "%m/%d/%y" %></strong><br>
         Total Days Tracked: <strong><%= number_with_delimiter(@entries.count) %></strong><br>
         Tracking Rate: <strong><%= @tracking_rate.to_i %>%</strong><br>
       </li>
+    <% end %>
+    <% unless @entries.count == 0 %>
       <li class="list-group-item">
         Total Flags: <strong><%= number_with_delimiter(@total_flags) %> / <%= number_with_delimiter(@flags_possible) %></strong><br>
         Flag Rate: <strong><%= @flag_rate.to_i %>%</strong><br>
         Perfect Days: <strong><%= number_with_delimiter(@perfect_flag_days) %></strong><br>
         Perfect Day Rate: <strong><%= @perfect_flag_rate.to_i %>%</strong>
       </li>
+    <% end %>
+    <% unless @total_weight_change.nil? %>
       <li class="list-group-item">
-        Total Weight Change: <strong class="<%= prefer_negative_class(@total_weight_change) %>"><%= number_with_precision(@total_weight_change, precision: 1) %> lbs</strong><br>
-        Change Rate: <strong class="<%= prefer_negative_class(@weight_change_rate) %>"><%= number_with_precision(@weight_change_rate, precision: 1) %> lbs/week</strong>
+        Total Change: <strong class="<%= prefer_negative_class(@total_weight_change) %>"><%= number_with_precision(@total_weight_change, precision: 1) %> #</strong><br>
+        Change Rate: <strong class="<%= prefer_negative_class(@weight_change_rate) %>"><%= number_with_precision(@weight_change_rate, precision: 1) %> #/week</strong>
       </li>
+    <% end %>
+    <% unless @calf_change.nil? %>
       <li class="list-group-item">
         Measurement Changes
         <ul>
-          <li>Calf: <strong class="<%= prefer_negative_class(@calf_change) %>"><%= number_with_precision(@calf_change, precision: 2) %>&Prime;</strong></li>
-          <li>Thigh: <strong class="<%= prefer_negative_class(@thigh_change) %>"><%= number_with_precision(@thigh_change, precision: 2) %>&Prime;</strong></li>
-          <li>Waist: <strong class="<%= prefer_negative_class(@waist_change) %>"><%= number_with_precision(@waist_change, precision: 2) %>&Prime;</strong></li>
-          <li>Stomach: <strong class="<%= prefer_negative_class(@stomach_change) %>"><%= number_with_precision(@stomach_change, precision: 2) %>&Prime;</strong></li>
-          <li>Shoulders: <strong class="<%= prefer_negative_class(@shoulder_change) %>"><%= number_with_precision(@shoulder_change, precision: 2) %>&Prime;</strong></li>
-          <li>Arm: <strong class="<%= prefer_negative_class(@arm_change) %>"><%= number_with_precision(@arm_change, precision: 2) %>&Prime;</strong></li>
-          <li>Neck: <strong class="<%= prefer_negative_class(@neck_change) %>"><%= number_with_precision(@neck_change, precision: 2) %>&Prime;</strong></li>
+          <li>Calf: <strong class="<%= prefer_negative_class(@calf_change) %>"><%= number_with_precision(@calf_change, precision: 1) %>&Prime;</strong></li>
+          <li>Thigh: <strong class="<%= prefer_negative_class(@thigh_change) %>"><%= number_with_precision(@thigh_change, precision: 1) %>&Prime;</strong></li>
+          <li>Waist: <strong class="<%= prefer_negative_class(@waist_change) %>"><%= number_with_precision(@waist_change, precision: 1) %>&Prime;</strong></li>
+          <li>Stomach: <strong class="<%= prefer_negative_class(@stomach_change) %>"><%= number_with_precision(@stomach_change, precision: 1) %>&Prime;</strong></li>
+          <li>Shoulders: <strong class="<%= prefer_negative_class(@shoulder_change) %>"><%= number_with_precision(@shoulder_change, precision: 1) %>&Prime;</strong></li>
+          <li>Arm: <strong class="<%= prefer_negative_class(@arm_change) %>"><%= number_with_precision(@arm_change, precision: 1) %>&Prime;</strong></li>
+          <li>Neck: <strong class="<%= prefer_negative_class(@neck_change) %>"><%= number_with_precision(@neck_change, precision: 1) %>&Prime;</strong></li>
         </ul>
       </li>
+    <% end %>
+    <% unless @max_total_calories.nil? && @max_active_calories.nil? && @max_steps.nil? %>
       <li class="list-group-item">
         Records
         <ul>
-          <li>Total Calories: <a href="#entry-<%= @max_total_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_total_calories.total_calories_burned) %> (<%= @max_total_calories.entry_on.strftime "%m/%d/%y" %>)</a></li>
-          <li>Active Calories: <a href="#entry-<%= @max_active_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_active_calories.active_calories_burned) %> (<%= @max_active_calories.entry_on.strftime "%m/%d/%y" %>)</a></li>
-          <li>Steps: <a href="#entry-<%= @max_steps.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_steps.steps) %> (<%= @max_steps.entry_on.strftime "%m/%d/%y" %>)</a></li>
+          <% unless @max_total_calories.nil? %><li>Total Calories: <a href="#entry-<%= @max_total_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_total_calories.total_calories_burned) %> (<%= @max_total_calories.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
+          <% unless @max_active_calories.nil? %><li>Active Calories: <a href="#entry-<%= @max_active_calories.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_active_calories.active_calories_burned) %> (<%= @max_active_calories.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
+          <% unless @max_steps.nil? %><li>Steps: <a href="#entry-<%= @max_steps.id %>" class="font-weight-bold"><%= number_with_delimiter(@max_steps.steps) %> (<%= @max_steps.entry_on.strftime "%m/%d/%y" %>)</a></li><% end %>
         </ul>
       </li>
-    </ul>
-  </div>
+    <% end %>
+  </ul>
 </div>
