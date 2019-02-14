@@ -1,6 +1,6 @@
 <div class="card my-3">
   <div class="card-header bg-dark text-warning font-weight-bold">
-    <%= fa_icon "certificate", text: "Statistics" %>
+    <%= fa_icon "table", text: "Statistics" %>
   </div>
   <ul class="list-group list-group-flush small">
     <% if @entries.count == 0 %>
@@ -25,8 +25,14 @@
     <% end %>
     <% unless @total_weight_change.nil? %>
       <li class="list-group-item">
-        Total Change: <strong class="<%= prefer_negative_class(@total_weight_change) %>"><%= number_with_precision(@total_weight_change, precision: 1) %> #</strong><br>
-        Change Rate: <strong class="<%= prefer_negative_class(@weight_change_rate) %>"><%= number_with_precision(@weight_change_rate, precision: 1) %> #/week</strong>
+        Weight Change: <strong class="<%= prefer_negative_class(@total_weight_change) %>"><%= number_with_precision(@total_weight_change, precision: 1) %> #</strong><br>
+        Change Rate: <strong class="<%= prefer_negative_class(@weight_change_rate) %>"><%= number_with_precision(@weight_change_rate, precision: 1) %> #/week</strong><br>
+        BMI Change: <strong class="<%= prefer_negative_class(@total_bmi_change) %>"><%= number_with_precision(@total_bmi_change, precision: 1) %></strong>
+      </li>
+    <% end %>
+    <% unless @total_body_fat_change.nil? %>
+      <li class="list-group-item">
+        Body Fat Change: <strong class="<%= prefer_negative_class(@total_body_fat_change) %>"><%= number_with_precision(@total_body_fat_change, precision: 1) %>%</strong>
       </li>
     <% end %>
     <% unless @calf_change.nil? %>
@@ -37,7 +43,7 @@
           <li>Thigh: <strong class="<%= prefer_negative_class(@thigh_change) %>"><%= number_with_precision(@thigh_change, precision: 1) %>&Prime;</strong></li>
           <li>Waist: <strong class="<%= prefer_negative_class(@waist_change) %>"><%= number_with_precision(@waist_change, precision: 1) %>&Prime;</strong></li>
           <li>Stomach: <strong class="<%= prefer_negative_class(@stomach_change) %>"><%= number_with_precision(@stomach_change, precision: 1) %>&Prime;</strong></li>
-          <li>Shoulders: <strong class="<%= prefer_negative_class(@shoulder_change) %>"><%= number_with_precision(@shoulder_change, precision: 1) %>&Prime;</strong></li>
+          <li>Chest: <strong class="<%= prefer_negative_class(@chest_change) %>"><%= number_with_precision(@chest_change, precision: 1) %>&Prime;</strong></li>
           <li>Arm: <strong class="<%= prefer_negative_class(@arm_change) %>"><%= number_with_precision(@arm_change, precision: 1) %>&Prime;</strong></li>
           <li>Neck: <strong class="<%= prefer_negative_class(@neck_change) %>"><%= number_with_precision(@neck_change, precision: 1) %>&Prime;</strong></li>
         </ul>

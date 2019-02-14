@@ -19,27 +19,28 @@ ActiveRecord::Schema.define(version: 2019_02_13_200038) do
     t.boolean "closed_move_ring", default: false
     t.boolean "closed_exercise_ring", default: false
     t.boolean "closed_stand_ring", default: false
-    t.boolean "went_to_gym", default: false
+    t.boolean "performed_workout", default: false
     t.boolean "met_sleep_goal", default: false
     t.integer "steps"
     t.integer "total_calories_consumed"
     t.integer "total_calories_burned"
     t.integer "active_calories_burned"
-    t.decimal "weight", precision: 5, scale: 2
-    t.decimal "calf_measurement", precision: 5, scale: 2
-    t.decimal "thigh_measurement", precision: 5, scale: 2
-    t.decimal "waist_measurement", precision: 5, scale: 2
-    t.decimal "stomach_measurement", precision: 5, scale: 2
-    t.decimal "shoulder_measurement", precision: 5, scale: 2
-    t.decimal "arm_measurement", precision: 5, scale: 2
-    t.decimal "neck_measurement", precision: 5, scale: 2
+    t.decimal "weight", precision: 5, scale: 1
+    t.decimal "body_fat", precision: 5, scale: 1
+    t.decimal "calf_measurement", precision: 5, scale: 1
+    t.decimal "thigh_measurement", precision: 5, scale: 1
+    t.decimal "waist_measurement", precision: 5, scale: 1
+    t.decimal "stomach_measurement", precision: 5, scale: 1
+    t.decimal "chest_measurement", precision: 5, scale: 1
+    t.decimal "arm_measurement", precision: 5, scale: 1
+    t.decimal "neck_measurement", precision: 5, scale: 1
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["entry_on"], name: "index_entries_on_entry_on"
   end
 
-  create_table "versions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+  create_table "versions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "item_type", limit: 191, null: false
     t.integer "item_id", null: false
     t.string "event", null: false

@@ -20,7 +20,7 @@ module EntriesHelper
     items << daily_flag_icon("heart", values[2], "Closed Move Ring")
     items << daily_flag_icon("bicycle", values[3], "Closed Exercise Ring")
     items << daily_flag_icon("arrow-up", values[4], "Closed Stand Ring")
-    items << daily_flag_icon("building", values[5], "Went To Gym")
+    items << daily_flag_icon("heartbeat", values[5], "Performed Workout")
     items << daily_flag_icon("bed", values[6], "Met Sleep Goal")
     items.join.html_safe
   end
@@ -33,12 +33,12 @@ module EntriesHelper
     score +=1 if entry.closed_move_ring
     score +=1 if entry.closed_exercise_ring
     score +=1 if entry.closed_stand_ring
-    score +=1 if entry.went_to_gym
+    score +=1 if entry.performed_workout
     score +=1 if entry.met_sleep_goal
     progress = 100 * (score / 7.0)
     case score
     when 7
-      color = "bg-primary"
+      color = "bg-success"
     when 5..6
       color = "bg-secondary"
     when 3..4
@@ -54,6 +54,20 @@ module EntriesHelper
     change = entry.weight_change
     return if change.nil? || change == 0
     "<br><small class=\"font-weight-bold #{prefer_negative_class(change)}\">#{number_with_precision(change, precision: 1)} #</small>".html_safe
+  end
+
+  # Prints BMI change.
+  def bmi_change(entry)
+    change = entry.bmi_change
+    return if change.nil? || change == 0
+    "<br><small class=\"font-weight-bold #{prefer_negative_class(change)}\">#{number_with_precision(change, precision: 1)}</small>".html_safe
+  end
+
+  # Prints body fat change.
+  def body_fat_change(entry)
+    change = entry.body_fat_change
+    return if change.nil? || change == 0
+    "<br><small class=\"font-weight-bold #{prefer_negative_class(change)}\">#{number_with_precision(change, precision: 1)}%</small>".html_safe
   end
 
   # Prints measurement changes.
@@ -76,6 +90,38 @@ module EntriesHelper
       "text-danger"
     else
       nil
+    end
+  end
+
+  # Returns class name to apply to BMI.
+  def bmi_class(bmi)
+    case bmi
+    when ->(b) { b > 40 }
+      "text-danger bmi-obese-3"
+    when ->(b) { b > 35 }
+      "text-danger bmi-obese-2"
+    when ->(b) { b > 30 }
+      "text-danger bmi-obese-1"
+    when ->(b) { b > 25 }
+      "text-warning bmi-overweight"
+    else
+      "text-success"
+    end
+  end
+
+  # Returns icon for BMI.
+  def bmi_icon(bmi)
+    case bmi
+    when ->(b) { b > 40 }
+      fa_icon('exclamation') * 3
+    when ->(b) { b > 35 }
+      fa_icon('exclamation') * 2
+    when ->(b) { b > 30 }
+      fa_icon('exclamation')
+    when ->(b) { b > 25 }
+      fa_icon('certificate')
+    else
+      fa_icon('diamond')
     end
   end
 

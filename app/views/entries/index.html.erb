@@ -4,12 +4,10 @@
 
     <h3 class="my-3">Daily Log</h3>
 
-    <%= render partial: "charts" %>
-
     <p class="lh-1">
       <%= link_to fa_icon("plus", text: "New"),
                   new_entry_path,
-                  class: "btn btn-sm btn-success" %>
+                  class: "btn btn-sm btn-dark" %>
     </p>
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
@@ -19,8 +17,10 @@
             <th class="text-center nw w-1">Daily Flags</th>
             <th class="text-center nw w-1 lh-1">Calories<br><small class="text-muted">Consumed / Burned / Active</small></th>
             <th class="text-center nw w-1">Weight</th>
+            <th class="text-center nw w-1">BMI</th>
+            <th class="text-center nw w-1">Body Fat</th>
             <th class="text-center nw w-1">Steps</th>
-            <th class="text-center nw w-1 lh-1">Measurements<br><small class="text-muted">Calf / Thigh / Waist / Stomach / Shoulders / Arm / Neck</small></th>
+            <th class="text-center nw w-1 lh-1">Measurements<br><small class="text-muted">Calf / Thigh / Waist / Stomach / Chest / Arm / Neck</small></th>
             <th>Notes</th>
             <th class="text-center nw w-1">Options</th>
           </tr>
@@ -28,14 +28,18 @@
         <tbody>
           <% @entries.each do |entry| %>
             <tr class="<%= entry.entry_on == Date.today ? "table-warning" : nil %>" id="entry-<%= entry.id %>">
-              <td class="text-center nw"><%= entry.entry_on.strftime "%m/%d/%y" %></td>
+              <td class="text-center nw">
+                <%= entry.entry_on.strftime "%m/%d/%y" %>
+                <br>
+                <small class="text-uncolor">(<%= entry.entry_on.strftime "%a" %>)</small>
+              </td>
               <td class="text-center nw">
                 <%= daily_flag_icons  entry.tracked_food,
                                       entry.stayed_under_calorie_goal,
                                       entry.closed_move_ring,
                                       entry.closed_exercise_ring,
                                       entry.closed_stand_ring,
-                                      entry.went_to_gym,
+                                      entry.performed_workout,
                                       entry.met_sleep_goal %>
                 <br>
                 <%= grade_bar(entry) %>
@@ -57,6 +61,25 @@
                   <%= weight_change(entry) %>
                 <% end %>
               </td>
+              <td class="text-center nw">
+                <% if entry.weight.nil? %>
+                  &nbsp;
+                <% else %>
+                  <span class="<%= bmi_class(entry.bmi) %>">
+                    <%= number_with_precision(entry.bmi, precision: 1) %>
+                    <%= bmi_icon(entry.bmi).html_safe %>
+                  </span>
+                  <%= bmi_change(entry) %>
+                <% end %>
+              </td>
+              <td class="text-center nw">
+                <% if entry.body_fat.nil? %>
+                  &nbsp;
+                <% else %>
+                  <%= number_with_precision(entry.body_fat, precision: 1) %>%
+                  <%= body_fat_change(entry) %>
+                <% end %>
+              </td>
               <td class="text-center nw"><%= entry.steps.nil? ? "&nbsp;".html_safe : number_with_delimiter(entry.steps) %></td>
               <td class="text-center nw">
                 <% if entry.measurements_entered? %>
@@ -64,7 +87,7 @@
                                 "#{number_with_precision(entry.thigh_measurement, precision: 1)}&Prime;",
                                 "#{number_with_precision(entry.waist_measurement, precision: 1)}&Prime;",
                                 "#{number_with_precision(entry.stomach_measurement, precision: 1)}&Prime;",
-                                "#{number_with_precision(entry.shoulder_measurement, precision: 1)}&Prime;",
+                                "#{number_with_precision(entry.chest_measurement, precision: 1)}&Prime;",
                                 "#{number_with_precision(entry.arm_measurement, precision: 1)}&Prime;",
                                 "#{number_with_precision(entry.neck_measurement, precision: 1)}&Prime;" %>
                   <%= measurement_change(entry) %>

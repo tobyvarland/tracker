@@ -4,6 +4,14 @@ class EntriesController < ApplicationController
   before_action :set_entry,
                 only: [:show, :edit, :update, :destroy]
 
+  # GET /entries/charts
+  def charts
+
+    # Retrieve all entries for graphing.
+    @entries = Entry.all.order(:entry_on)
+
+  end
+
   # GET /entries
   def index
 
@@ -21,10 +29,36 @@ class EntriesController < ApplicationController
       @perfect_flag_days = @entries.count{|e|e.flag_score == 7}
       @flag_rate = 100 * (@total_flags / (1.0 * @flags_possible))
       @perfect_flag_rate = 100 * (@perfect_flag_days / (1.0 * (@days_since_first_entry + 1)))
-      @starting_weight = @entries.where.not(weight: nil).last.weight
-      @most_recent_weight = @entries.where.not(weight: nil).first.weight
-      @total_weight_change = @most_recent_weight - @starting_weight
-      @weight_change_rate = @total_weight_change / @weeks_since_first_entry
+      if @entries.where.not(weight: nil).last.nil?
+        @starting_weight_record = nil
+        @most_recent_weight_record = nil
+        @starting_weight = nil
+        @most_recent_weight = nil
+        @total_weight_change = nil
+        @weight_change_rate = nil
+        @starting_bmi = nil
+        @most_recent_bmi = nil
+        @total_bmi_change = nil
+      else
+        @starting_weight_record = @entries.where.not(weight: nil).last
+        @most_recent_weight_record = @entries.where.not(weight: nil).first
+        @starting_weight = @starting_weight_record.weight
+        @most_recent_weight = @most_recent_weight_record.weight
+        @total_weight_change = @most_recent_weight - @starting_weight
+        @weight_change_rate = @total_weight_change / @weeks_since_first_entry
+        @starting_bmi = @starting_weight_record.bmi
+        @most_recent_bmi = @most_recent_weight_record.bmi
+        @total_bmi_change = @most_recent_bmi - @starting_bmi
+      end
+      if @entries.where.not(body_fat: nil).last.nil?
+        @starting_body_fat = nil
+        @most_recent_body_fat = nil
+        @total_body_fat_change = nil
+      else
+        @starting_body_fat = @entries.where.not(body_fat: nil).last.body_fat
+        @most_recent_body_fat = @entries.where.not(body_fat: nil).first.body_fat
+        @total_body_fat_change = @most_recent_body_fat - @starting_body_fat
+      end
       @max_steps = nil
       @max_total_calories = nil
       @max_active_calories = nil
@@ -47,7 +81,7 @@ class EntriesController < ApplicationController
         @thigh_change = 0.0
         @waist_change = 0.0
         @stomach_change = 0.0
-        @shoulder_change = 0.0
+        @chest_change = 0.0
         @arm_change = 0.0
         @neck_change = 0.0
       else
@@ -56,7 +90,7 @@ class EntriesController < ApplicationController
         @thigh_change = @most_recent_with_measurements.thigh_measurement - @first_with_measurements.thigh_measurement
         @waist_change = @most_recent_with_measurements.waist_measurement - @first_with_measurements.waist_measurement
         @stomach_change = @most_recent_with_measurements.stomach_measurement - @first_with_measurements.stomach_measurement
-        @shoulder_change = @most_recent_with_measurements.shoulder_measurement - @first_with_measurements.shoulder_measurement
+        @chest_change = @most_recent_with_measurements.chest_measurement - @first_with_measurements.chest_measurement
         @arm_change = @most_recent_with_measurements.arm_measurement - @first_with_measurements.arm_measurement
         @neck_change = @most_recent_with_measurements.neck_measurement - @first_with_measurements.neck_measurement
       end
@@ -117,18 +151,19 @@ private
                                   :closed_move_ring,
                                   :closed_exercise_ring,
                                   :closed_stand_ring,
-                                  :went_to_gym,
+                                  :performed_workout,
                                   :met_sleep_goal,
                                   :steps,
                                   :total_calories_consumed,
                                   :total_calories_burned,
                                   :active_calories_burned,
                                   :weight,
+                                  :body_fat,
                                   :calf_measurement,
                                   :thigh_measurement,
                                   :waist_measurement,
                                   :stomach_measurement,
-                                  :shoulder_measurement,
+                                  :chest_measurement,
                                   :arm_measurement,
                                   :neck_measurement,
                                   :notes)

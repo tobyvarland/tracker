@@ -16,19 +16,25 @@
   <% end %>
 
   <div class="row">
-    <div class="col-12 col-sm-6 col-md-4">
+    <div class="col-12 col-sm-6 col-md-3">
       <div class="form-group">
         <%= form.label :entry_on, "Date:" %>
         <%= form.date_field :entry_on, class: (entry.errors[:entry_on].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-4">
+    <div class="col-12 col-sm-6 col-md-3">
       <div class="form-group">
         <%= form.label :weight, "Weight:" %>
         <%= form.number_field :weight, class: (entry.errors[:weight].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-4">
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="form-group">
+        <%= form.label :body_fat, "Body Fat:" %>
+        <%= form.number_field :body_fat, class: (entry.errors[:body_fat].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-3">
       <div class="form-group">
         <%= form.label :steps, "Steps:" %>
         <%= form.number_field :steps, class: (entry.errors[:steps].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 1 %>
@@ -37,7 +43,7 @@
   </div>
 
   <div class="row">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
       <fieldset class="form-group">
         <legend class="mb-1">Daily Checks</legend>
         <div class="custom-control custom-checkbox">
@@ -61,8 +67,8 @@
           <%= form.label :closed_stand_ring, "Closed stand ring", class: "custom-control-label" %>
         </div>
         <div class="custom-control custom-checkbox">
-          <%= form.check_box :went_to_gym, class: (entry.errors[:went_to_gym].blank? ? "" : "is-invalid ") + "custom-control-input" %>
-          <%= form.label :went_to_gym, "Went to gym", class: "custom-control-label" %>
+          <%= form.check_box :performed_workout, class: (entry.errors[:performed_workout].blank? ? "" : "is-invalid ") + "custom-control-input" %>
+          <%= form.label :performed_workout, "Performed workout", class: "custom-control-label" %>
         </div>
         <div class="custom-control custom-checkbox">
           <%= form.check_box :met_sleep_goal, class: (entry.errors[:met_sleep_goal].blank? ? "" : "is-invalid ") + "custom-control-input" %>
@@ -70,7 +76,7 @@
         </div>
       </fieldset>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
       <fieldset class="form-group">
         <legend class="mb-1">Calorie Tracking</legend>
         <div class="form-row">
@@ -95,47 +101,47 @@
         </div>
       </fieldset>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-6">
       <fieldset class="form-group">
         <legend class="mb-1">Measurements</legend>
         <div class="form-row">
-          <div class="col-4">
+          <div class="col">
             <div class="form-group">
               <%= form.label :calf_measurement, "Calf:" %>
               <%= form.number_field :calf_measurement, class: (entry.errors[:calf_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col">
             <div class="form-group">
               <%= form.label :thigh_measurement, "Thigh:" %>
               <%= form.number_field :thigh_measurement, class: (entry.errors[:thigh_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col">
             <div class="form-group">
               <%= form.label :waist_measurement, "Waist:" %>
               <%= form.number_field :waist_measurement, class: (entry.errors[:waist_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col">
             <div class="form-group">
               <%= form.label :stomach_measurement, "Stomach:" %>
               <%= form.number_field :stomach_measurement, class: (entry.errors[:stomach_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col">
             <div class="form-group">
-              <%= form.label :shoulder_measurement, "Shoulders:" %>
-              <%= form.number_field :shoulder_measurement, class: (entry.errors[:shoulder_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
+              <%= form.label :chest_measurement, "Chest:" %>
+              <%= form.number_field :chest_measurement, class: (entry.errors[:chest_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col">
             <div class="form-group">
               <%= form.label :arm_measurement, "Arm:" %>
               <%= form.number_field :arm_measurement, class: (entry.errors[:arm_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col">
             <div class="form-group">
               <%= form.label :neck_measurement, "Neck:" %>
               <%= form.number_field :neck_measurement, class: (entry.errors[:neck_measurement].blank? ? "" : "is-invalid ") + "form-control form-control-sm", step: 0.1 %>
