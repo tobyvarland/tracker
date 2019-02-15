@@ -18,8 +18,8 @@
             <th rowspan="2" class="text-center nw w-1">Date</th>
             <th rowspan="2" class="nw">Label</th>
             <th rowspan="2" class="text-center nw w-1">Goal Weight</th>
-            <th rowspan="2" class="text-center nw w-1 d-none">Days Away</th>
-            <th rowspan="2" class="text-center nw w-1 d-none">Weeks Away</th>
+            <th rowspan="2" class="text-center nw w-1 d-none d-md-table-cell">Days Away</th>
+            <th rowspan="2" class="text-center nw w-1 d-none d-md-table-cell">Weeks Away</th>
             <th colspan="7" class="text-center nw">Weight Loss Rate <small class="text-muted">(#/week)</small></th>
             <th rowspan="2" class="text-center nw w-1">Options</th>
           </tr>
@@ -48,17 +48,17 @@
               <td class="text-center nw">
                 <%= projection.goal_weight %> #
               </td>
-              <td class="text-center nw d-none">
-                <%= projection.days_away %>
-              </td>
-              <td class="text-center nw d-none">
-                <%= number_with_precision(projection.weeks_away, precision: 2) %>
-              </td>
               <% if projection.projection_date <= Date.today %>
-                <td colspan="7" class="text-center nw">
+                <td colspan="9" class="text-center nw">
                   <%= projection_summary(projection) %>
                 </td>
               <% else %>
+                <td class="text-center nw d-none d-md-table-cell">
+                  <%= projection.days_away %>
+                </td>
+                <td class="text-center nw d-none d-md-table-cell">
+                  <%= number_with_precision(projection.weeks_away, precision: 2) %>
+                </td>
                 <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, @current_rate, projection.weeks_away, @target_weight), precision: 1) %></td>
                 <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -3, projection.weeks_away, @target_weight), precision: 1) %></td>
                 <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -2.5, projection.weeks_away, @target_weight), precision: 1) %></td>
