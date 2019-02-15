@@ -105,7 +105,7 @@ process_charts = ->
   if body_fat_table.getNumberOfRows() < 2
     body_fat_chart_container.html "<p class=\"p-3 rounded border bg-light text-muted text-center small font-italic\">Not enough data to graph body fat.</p>"
   else
-    body_fat_chart = new google.visualization.LineChart(document.getElementById('body_fat-chart'))
+    body_fat_chart = new google.visualization.LineChart(document.getElementById('body-fat-chart'))
     body_fat_chart.draw(body_fat_table, body_fat_options)
 
 # Formats data table for weight chart.
