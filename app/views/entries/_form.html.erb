@@ -19,7 +19,7 @@
     <div class="col-12 col-sm-6 col-md-3">
       <div class="form-group">
         <%= form.label :entry_date, "Date:" %>
-        <%= form.date_field :entry_date, class: (entry.errors[:entry_date].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
+        <%= form.date_field :entry_date, class: (entry.errors[:entry_date].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true, tabindex: 1, autofocus: true %>
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-3">
@@ -212,7 +212,7 @@
   <div class="row">
     <div class="col-12">
       <div class="float-right">
-        <%= link_to fa_icon("arrow-left", text: "Cancel"), entries_url, class: "btn btn-sm btn-light" %>
+        <%= link_to fa_icon("arrow-left", text: "Cancel"), entries_url, class: "btn btn-sm btn-light", tabindex: -1 %>
         <button type="submit" class="btn btn-sm btn-primary"><%= fa_icon "check", text: "Submit" %></button>
       </div>
     </div>

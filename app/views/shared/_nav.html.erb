@@ -9,13 +9,13 @@
   <div class="collapse navbar-collapse" id="tracker-nav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item <%= "active" if controller_name == "entries" && action_name == "index" %>">
-        <a class="nav-link" href="/"><%= fa_icon "home", class: "fa-2x fa-fw" %></a>
+        <a class="nav-link" href="/" tabindex="-1"><%= fa_icon "home", class: "fa-2x fa-fw" %></a>
       </li>
       <li class="nav-item <%= "active" if controller_name == "entries" && action_name == "charts" %>">
-        <a class="nav-link" href="<%= charts_url %>"><%= fa_icon "line-chart", class: "fa-2x fa-fw" %></a>
+        <a class="nav-link" href="<%= charts_url %>" tabindex="-1"><%= fa_icon "line-chart", class: "fa-2x fa-fw" %></a>
       </li>
       <li class="nav-item <%= "active" if controller_name == "projections" && action_name == "index" %>">
-        <a class="nav-link" href="<%= projections_url %>"><%= fa_icon "calendar", class: "fa-2x fa-fw" %></a>
+        <a class="nav-link" href="<%= projections_url %>" tabindex="-1"><%= fa_icon "calendar", class: "fa-2x fa-fw" %></a>
       </li>
     </ul>
   </div>
