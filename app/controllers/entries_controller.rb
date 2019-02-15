@@ -54,10 +54,12 @@ class EntriesController < ApplicationController
         @starting_body_fat = nil
         @most_recent_body_fat = nil
         @total_body_fat_change = nil
+        @lean_mass = nil
       else
         @starting_body_fat = @entries.where.not(body_fat: nil).last.body_fat
         @most_recent_body_fat = @entries.where.not(body_fat: nil).first.body_fat
         @total_body_fat_change = @most_recent_body_fat - @starting_body_fat
+        @lean_mass = @most_recent_weight * (1 - (@most_recent_body_fat / 100.0))
       end
       @max_steps = nil
       @max_total_calories = nil

@@ -32,7 +32,11 @@
     <% end %>
     <% unless @total_body_fat_change.nil? %>
       <li class="list-group-item">
-        Body Fat Change: <strong class="<%= prefer_negative_class(@total_body_fat_change) %>"><%= number_with_precision(@total_body_fat_change, precision: 1) %>%</strong>
+        Body Fat Change: <strong class="<%= prefer_negative_class(@total_body_fat_change) %>"><%= number_with_precision(@total_body_fat_change, precision: 1) %>%</strong><br>
+        Lean Mass: <strong><%= number_with_precision(@lean_mass, precision: 1) %> #</strong><br>
+        Ideal Weight (16% BF): <strong><%= number_with_precision(@lean_mass / 0.84, precision: 1) %> #</strong><br>
+        Ideal Weight (18% BF): <strong><%= number_with_precision(@lean_mass / 0.82, precision: 1) %> #</strong><br>
+        Ideal Weight (20% BF): <strong><%= number_with_precision(@lean_mass / 0.8, precision: 1) %> #</strong>
       </li>
     <% end %>
     <% unless @calf_change.nil? %>
