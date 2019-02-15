@@ -39,7 +39,7 @@
         Ideal Weight (20% BF): <strong><%= number_with_precision(@lean_mass / 0.8, precision: 1) %> #</strong>
       </li>
     <% end %>
-    <% unless @calf_change.nil? %>
+    <% unless @calf_change.nil? || [@calf_change, @thigh_change, @waist_change, @stomach_change, @chest_change, @arm_change, @neck_change].all? {|c| c== 0} %>
       <li class="list-group-item">
         Measurement Changes
         <ul>
