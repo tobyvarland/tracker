@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_202101) do
+ActiveRecord::Schema.define(version: 2019_02_15_145303) do
 
   create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "entry_date", null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_202101) do
     t.string "label", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "goal_weight", default: 0, null: false
     t.index ["projection_date"], name: "index_projections_on_projection_date"
   end
 

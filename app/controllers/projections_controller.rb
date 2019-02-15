@@ -8,7 +8,7 @@ class ProjectionsController < ApplicationController
   def index
 
     # Retrieve all projections for display.
-    @projections = Projection.where(["projection_date > ?", Date.today]).order(:projection_date)
+    @projections = Projection.all.order(:projection_date)
 
     # Calculate current weight & change rate.
     most_recent_weight = Entry.where.not(weight: nil).order(entry_date: :desc).first
@@ -70,7 +70,8 @@ private
   # Define permissable parameters.
   def projection_params
     params.require(:projection).permit(:projection_date,
-                                       :label)
+                                       :label,
+                                       :goal_weight)
   end
 
 end

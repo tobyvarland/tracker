@@ -17,8 +17,9 @@
           <tr>
             <th rowspan="2" class="text-center nw w-1">Date</th>
             <th rowspan="2" class="nw">Label</th>
-            <th rowspan="2" class="text-center nw w-1">Days Away</th>
-            <th rowspan="2" class="text-center nw w-1">Weeks Away</th>
+            <th rowspan="2" class="text-center nw w-1">Goal Weight</th>
+            <th rowspan="2" class="text-center nw w-1 d-none">Days Away</th>
+            <th rowspan="2" class="text-center nw w-1 d-none">Weeks Away</th>
             <th colspan="7" class="text-center nw">Weight Loss Rate <small class="text-muted">(#/week)</small></th>
             <th rowspan="2" class="text-center nw w-1">Options</th>
           </tr>
@@ -34,26 +35,38 @@
         </thead>
         <tbody>
           <% @projections.each do |projection| %>
-            <tr class="<%= projection.projection_date == Date.today ? "table-warning" : nil %>" id="projection-<%= projection.id %>">
+            <tr class="<%= projection.projection_date == Date.today ? "table-warning" : nil %> <%= projection.projection_date < Date.today ? "table-info" : nil %>" id="projection-<%= projection.id %>">
               <td class="text-center nw">
                 <%= projection.projection_date.strftime "%m/%d/%y" %>
               </td>
               <td class="nw">
                 <%= projection.label %>
+                <% if projection.projection_date > Date.today %>
+                  <small class="text-uncolor">(<%= number_with_precision(projection.loss_rate_needed(@current_weight), precision: 1) %> #/week)</small>
+                <% end %>
               </td>
               <td class="text-center nw">
+                <%= projection.goal_weight %> #
+              </td>
+              <td class="text-center nw d-none">
                 <%= projection.days_away %>
               </td>
-              <td class="text-center nw">
+              <td class="text-center nw d-none">
                 <%= number_with_precision(projection.weeks_away, precision: 2) %>
               </td>
-              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, @current_rate, projection.weeks_away, @target_weight), precision: 1) %></td>
-              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -3, projection.weeks_away, @target_weight), precision: 1) %></td>
-              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -2.5, projection.weeks_away, @target_weight), precision: 1) %></td>
-              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -2, projection.weeks_away, @target_weight), precision: 1) %></td>
-              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -1.5, projection.weeks_away, @target_weight), precision: 1) %></td>
-              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -1, projection.weeks_away, @target_weight), precision: 1) %></td>
-              <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -0.5, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <% if projection.projection_date <= Date.today %>
+                <td colspan="7" class="text-center nw">
+                  <%= projection_summary(projection) %>
+                </td>
+              <% else %>
+                <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, @current_rate, projection.weeks_away, @target_weight), precision: 1) %></td>
+                <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -3, projection.weeks_away, @target_weight), precision: 1) %></td>
+                <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -2.5, projection.weeks_away, @target_weight), precision: 1) %></td>
+                <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -2, projection.weeks_away, @target_weight), precision: 1) %></td>
+                <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -1.5, projection.weeks_away, @target_weight), precision: 1) %></td>
+                <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -1, projection.weeks_away, @target_weight), precision: 1) %></td>
+                <td class="text-center nw"><%= number_with_precision(weight_projection(@current_weight, -0.5, projection.weeks_away, @target_weight), precision: 1) %></td>
+              <% end %>
               <td class="nw">
                 <div class="btn-group btn-group-sm" role="group">
                   <%= link_to fa_icon("pencil"), edit_projection_path(projection), class: "btn btn-dark" %>

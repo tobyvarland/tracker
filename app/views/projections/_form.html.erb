@@ -16,16 +16,27 @@
   <% end %>
 
   <div class="row">
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-4">
       <div class="form-group">
         <%= form.label :projection_date, "Date:" %>
         <%= form.date_field :projection_date, class: (projection.errors[:projection_date].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
       </div>
     </div>
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-4">
       <div class="form-group">
         <%= form.label :label, "Label:" %>
         <%= form.text_field :label, class: (projection.errors[:label].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true %>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div class="form-group">
+        <%= form.label :goal_weight, "Goal Weight:" %>
+        <div class="input-group input-group-sm">
+          <%= form.number_field :goal_weight, class: (projection.errors[:goal_weight].blank? ? "" : "is-invalid ") + "form-control", step: 1, in: 0...500 %>
+          <div class="input-group-append">
+            <span class="input-group-text">lbs</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
