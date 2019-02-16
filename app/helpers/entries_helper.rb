@@ -46,7 +46,7 @@ module EntriesHelper
     else
       color = "bg-danger"
     end
-    "<div class=\"progress mt-1\"><div class=\"progress-bar progress-bar-striped #{color} progress-bar-animated\" role=\"progressbar\" style=\"width: #{progress}%;\"></div>".html_safe
+    "<div class=\"progress mt-1\"><div class=\"progress-bar progress-bar-striped #{color} progress-bar-animated\" role=\"progressbar\" style=\"width: #{progress}%;\"></div></div>".html_safe
   end
 
   # Prints weight change.

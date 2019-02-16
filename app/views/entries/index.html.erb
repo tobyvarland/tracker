@@ -9,7 +9,8 @@
                   new_entry_path,
                   class: "btn btn-sm btn-dark" %>
     </p>
-    <div class="table-responsive">
+    <%= render partial: "entry", collection: @entries %>
+    <div class="table-responsive d-none">
       <table class="table table-bordered table-striped">
         <thead class="thead-dark">
           <tr>

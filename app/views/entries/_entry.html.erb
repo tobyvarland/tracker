@@ -1,0 +1,69 @@
+<div class="card mb-3">
+  <h6 class="card-header">
+    <%= entry.entry_date.strftime "%m/%d/%y (%a)" %>
+    <span class="float-right font-weight-normal">
+      <%= link_to fa_icon("pencil"), edit_entry_path(entry), class: "text-dark" %>
+      <%= link_to fa_icon("times"), entry, method: :delete, class: "text-danger", data: { confirm: "Are you sure you want to delete this entry?" } %>
+    </span>
+  </h6>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 col-md-2 text-center">
+        <%= daily_flag_icons  entry.tracked_food,
+                              entry.stayed_under_calorie_goal,
+                              entry.closed_move_ring,
+                              entry.closed_exercise_ring,
+                              entry.closed_stand_ring,
+                              entry.performed_workout,
+                              entry.met_sleep_goal %>
+        <br>
+        <%= grade_bar(entry) %>
+      </div>
+      <div class="col-12 col-md-2 text-center mt-2 mt-md-0">
+        <% unless entry.weight.blank? %>
+          <small class="text-uncolor">Weight/BMI/BF:</small><br>
+          <%= sep_list  number_with_precision(entry.weight, precision: 1),
+                        number_with_precision(entry.bmi, precision: 1),
+                        number_with_precision(entry.body_fat, precision: 1) %>
+        <% end %>
+      </div>
+      <div class="col-12 col-md-2 text-center">
+        <% if entry.calories_entered? %>
+          <small class="text-uncolor">Calories:</small><br>
+          <%= sep_list  number_with_delimiter(entry.total_calories_consumed),
+                        number_with_delimiter(entry.total_calories_burned),
+                        number_with_delimiter(entry.active_calories_burned) %>
+        <% end %>
+      </div>
+      <div class="col-12 col-md-1 text-center">
+        <% unless entry.steps.blank? %>
+          <small class="text-uncolor">Steps:</small><br>
+          <%= number_with_delimiter(entry.steps) %>
+        <% end %>
+      </div>
+      <div class="col-12 col-md-5 text-center">
+        <% if entry.measurements_entered? %>
+          <small class="text-uncolor">Calf/Thigh/Waist/Stomach/Chest/Arm/Neck:</small><br>
+          <%= sep_list  number_with_precision(entry.calf_measurement, precision: 1),
+                        number_with_precision(entry.thigh_measurement, precision: 1),
+                        number_with_precision(entry.waist_measurement, precision: 1),
+                        number_with_precision(entry.stomach_measurement, precision: 1),
+                        number_with_precision(entry.chest_measurement, precision: 1),
+                        number_with_precision(entry.arm_measurement, precision: 1),
+                        number_with_precision(entry.neck_measurement, precision: 1) %>
+        <% end %>
+      </div>
+    </div>
+    <% unless entry.notes.blank? %>
+      <div class="row mt-2">
+        <div class="col lh-1">
+          <small class="text-uncolor">Notes:</small><br>
+          <%= entry.notes %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!--
+-->
