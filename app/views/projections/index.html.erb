@@ -42,11 +42,11 @@
               <td class="nw">
                 <%= projection.label %>
                 <% if projection.projection_date > Date.today %>
-                  <small class="text-uncolor">(<%= number_with_precision(projection.loss_rate_needed(@current_weight), precision: 1) %> #/week)</small>
+                  <small class="text-uncolor">(<%= number_with_precision(projection.loss_rate_needed(@current_weight), precision: 1) %>#/week)</small>
                 <% end %>
               </td>
               <td class="text-center nw">
-                <%= projection.goal_weight %> #
+                <%= projection.goal_weight %>#
               </td>
               <% if projection.projection_date <= Date.today %>
                 <td colspan="9" class="text-center nw">

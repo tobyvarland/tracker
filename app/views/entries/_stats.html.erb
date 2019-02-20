@@ -25,18 +25,18 @@
     <% end %>
     <% unless @total_weight_change.nil? %>
       <li class="list-group-item">
-        Weight Change: <strong class="<%= prefer_negative_class(@total_weight_change) %>"><%= number_with_precision(@total_weight_change, precision: 1) %> #</strong><br>
-        Change Rate: <strong class="<%= prefer_negative_class(@weight_change_rate) %>"><%= number_with_precision(@weight_change_rate, precision: 1) %> #/week</strong><br>
-        BMI Change: <strong class="<%= prefer_negative_class(@total_bmi_change) %>"><%= number_with_precision(@total_bmi_change, precision: 1) %></strong>
+        Weight Loss: <strong class="<%= prefer_negative_class(@total_weight_change) %>"><%= number_with_precision(@total_weight_change, precision: 1) %># (<%= number_with_precision(@percentage_change, precision: 1) %>%)</strong><br>
+        Loss Rate: <strong class="<%= prefer_negative_class(@weight_change_rate) %>"><%= number_with_precision(@weight_change_rate, precision: 1) %>#/week</strong><br>
+        BMI Loss: <strong class="<%= prefer_negative_class(@total_bmi_change) %>"><%= number_with_precision(@total_bmi_change, precision: 1) %></strong>
       </li>
     <% end %>
     <% unless @total_body_fat_change.nil? %>
       <li class="list-group-item">
-        Body Fat Change: <strong class="<%= prefer_negative_class(@total_body_fat_change) %>"><%= number_with_precision(@total_body_fat_change, precision: 1) %>%</strong><br>
-        Lean Mass: <strong><%= number_with_precision(@lean_mass, precision: 1) %> #</strong><br>
-        Ideal Weight (16% BF): <strong><%= number_with_precision(@lean_mass / 0.84, precision: 1) %> #</strong><br>
-        Ideal Weight (18% BF): <strong><%= number_with_precision(@lean_mass / 0.82, precision: 1) %> #</strong><br>
-        Ideal Weight (20% BF): <strong><%= number_with_precision(@lean_mass / 0.8, precision: 1) %> #</strong>
+        Body Fat Loss: <strong class="<%= prefer_negative_class(@total_body_fat_change) %>"><%= number_with_precision(@total_body_fat_change, precision: 1) %>%</strong><br>
+        Lean Mass: <strong><%= number_with_precision(@lean_mass, precision: 1) %>#</strong><br>
+        Ideal Weight (16% BF): <strong><%= number_with_precision(@lean_mass / 0.84, precision: 1) %>#</strong><br>
+        Ideal Weight (18% BF): <strong><%= number_with_precision(@lean_mass / 0.82, precision: 1) %>#</strong><br>
+        Ideal Weight (20% BF): <strong><%= number_with_precision(@lean_mass / 0.8, precision: 1) %>#</strong>
       </li>
     <% end %>
     <% unless @calf_change.nil? || [@calf_change, @thigh_change, @waist_change, @stomach_change, @chest_change, @arm_change, @neck_change].all? {|c| c== 0} %>

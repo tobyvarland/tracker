@@ -57,7 +57,7 @@
                 <% if entry.weight.nil? %>
                   &nbsp;
                 <% else %>
-                  <%= number_with_precision(entry.weight, precision: 1) %> #
+                  <%= number_with_precision(entry.weight, precision: 1) %>#
                   <%= weight_change(entry) %>
                 <% end %>
               </td>

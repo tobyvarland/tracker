@@ -16,9 +16,9 @@ module ProjectionsHelper
       "<span class=\"text-muted font-italic\">No measurement data.</span>".html_safe
     elsif projection.closest_measurement.weight > projection.goal_weight
       difference = projection.closest_measurement.weight - projection.goal_weight
-      "<span class=\"text-danger font-weight-bold\">#{fa_icon "times"} Missed goal by #{pluralize difference, "pound"}: #{projection.closest_measurement.weight} # on #{projection.closest_measurement.entry_date.strftime "%m/%d/%y"}.</span>".html_safe
+      "<span class=\"text-danger font-weight-bold\">#{fa_icon "times"} Missed goal by #{pluralize difference, "pound"}: #{projection.closest_measurement.weight}# on #{projection.closest_measurement.entry_date.strftime "%m/%d/%y"}.</span>".html_safe
     else
-      "<span class=\"text-success font-weight-bold\">#{fa_icon "check"} Met goal: #{projection.closest_measurement.weight} # on #{projection.closest_measurement.entry_date.strftime "%m/%d/%y"}.</span>".html_safe
+      "<span class=\"text-success font-weight-bold\">#{fa_icon "check"} Met goal: #{projection.closest_measurement.weight}# on #{projection.closest_measurement.entry_date.strftime "%m/%d/%y"}.</span>".html_safe
     end
   end
 

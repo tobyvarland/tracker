@@ -39,12 +39,14 @@ class EntriesController < ApplicationController
         @starting_bmi = nil
         @most_recent_bmi = nil
         @total_bmi_change = nil
+        @percentage_change = nil
       else
         @starting_weight_record = @entries.where.not(weight: nil).last
         @most_recent_weight_record = @entries.where.not(weight: nil).first
         @starting_weight = @starting_weight_record.weight
         @most_recent_weight = @most_recent_weight_record.weight
         @total_weight_change = @most_recent_weight - @starting_weight
+        @percentage_change = 100 * (@total_weight_change / @starting_weight)
         @weight_change_rate = @total_weight_change / @weeks_since_first_entry
         @starting_bmi = @starting_weight_record.bmi
         @most_recent_bmi = @most_recent_weight_record.bmi

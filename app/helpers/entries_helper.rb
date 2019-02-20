@@ -53,7 +53,7 @@ module EntriesHelper
   def weight_change(entry)
     change = entry.weight_change
     return if change.nil? || change == 0
-    "<br><small class=\"font-weight-bold #{prefer_negative_class(change)}\">#{number_with_precision(change, precision: 1)} #</small>".html_safe
+    "<br><small class=\"font-weight-bold #{prefer_negative_class(change)}\">#{number_with_precision(change, precision: 1)}#</small>".html_safe
   end
 
   # Prints BMI change.
