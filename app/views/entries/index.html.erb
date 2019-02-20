@@ -9,8 +9,7 @@
                   new_entry_path,
                   class: "btn btn-sm btn-dark" %>
     </p>
-    <%= render partial: "entry", collection: @entries %>
-    <div class="table-responsive d-none">
+    <div class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead class="thead-dark">
           <tr>
@@ -96,7 +95,7 @@
                   &nbsp;
                 <% end %>
               </td>
-              <td><%= entry.notes.nil? ? "&nbsp;".html_safe : entry.notes.html_safe %></td>
+              <td class="new-br"><%= entry.notes.nil? ? "&nbsp;".html_safe : entry.notes.html_safe %></td>
               <td class="nw">
                 <div class="btn-group btn-group-sm" role="group">
                   <%= link_to fa_icon("pencil"), edit_entry_path(entry), class: "btn btn-dark" %>
