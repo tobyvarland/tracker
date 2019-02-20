@@ -257,6 +257,9 @@ get_weight_chart_options = (width)->
     pointsVisible: true,
     theme: "maximized",
     title: "Weight",
+    trendlines: {
+      0: {}
+    },
     vAxis: {
       format: "decimal",
       title: "Pounds"
@@ -278,6 +281,9 @@ get_bmi_chart_options = (width)->
     pointsVisible: true,
     theme: "maximized",
     title: "BMI",
+    trendlines: {
+      0: {}
+    },
     vAxis: {
       format: "decimal",
       title: "BMI"
@@ -362,6 +368,9 @@ get_body_fat_chart_options = (width)->
     pointsVisible: true,
     theme: "maximized",
     title: "Body Fat",
+    trendlines: {
+      0: {}
+    },
     vAxis: {
       format: "decimal",
       title: "%"
