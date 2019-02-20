@@ -8,7 +8,7 @@ class MilestonesController < ApplicationController
   def index
 
     # Retrieve all milestones for display.
-    @milestones = Milestone.all.order(:milestone_date)
+    @milestones = Milestone.all.order(:label)
 
   end
 
