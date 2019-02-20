@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  label: MyString
+  milestone_date: 2019-02-20
+  notes: MyText
+
+two:
+  label: MyString
+  milestone_date: 2019-02-20
+  notes: MyText

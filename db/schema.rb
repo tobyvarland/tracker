@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_145303) do
+ActiveRecord::Schema.define(version: 2019_02_20_165650) do
 
   create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "entry_date", null: false
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 2019_02_15_145303) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["entry_date"], name: "index_entries_on_entry_date"
+  end
+
+  create_table "milestones", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "label", null: false
+    t.date "milestone_date"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "projections", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

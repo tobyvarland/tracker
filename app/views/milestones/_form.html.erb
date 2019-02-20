@@ -1,0 +1,52 @@
+<%= form_with(model: milestone, local: true, class: "text-light bg-dark p-3 my-3 rounded border") do |form| %>
+
+  <% if milestone.errors.any? %>
+    <div class="row">
+      <div class="col-12">
+        <div class="bg-danger text-white p-2 rounded mb-3">
+          <h6><%= pluralize(milestone.errors.count, "error") %> prevented this milestone from being saved:</h6>
+          <ul class="mb-0">
+            <% milestone.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-12 col-sm-4">
+      <div class="form-group">
+        <%= form.label :label, "Milestone:" %>
+        <%= form.text_field :label, class: (milestone.errors[:label].blank? ? "" : "is-invalid ") + "form-control form-control-sm", required: true, tabindex: 1, autofocus: true %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-4">
+      <div class="form-group">
+        <%= form.label :milestone_date, "Date Achieved:" %>
+        <%= form.date_field :milestone_date, class: (milestone.errors[:milestone_date].blank? ? "" : "is-invalid ") + "form-control form-control-sm" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <%= form.label :notes, "Notes:" %>
+        <%= form.text_area :notes, class: (milestone.errors[:notes].blank? ? "" : "is-invalid ") + "form-control form-control-sm" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="float-right">
+        <%= link_to fa_icon("arrow-left", text: "Cancel"), milestones_url, class: "btn btn-sm btn-light", tabindex: -1 %>
+        <button type="submit" class="btn btn-sm btn-primary"><%= fa_icon "check", text: "Submit" %></button>
+      </div>
+    </div>
+  </div>
+
+<% end %>
