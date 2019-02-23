@@ -28,7 +28,7 @@ class EntriesController < ApplicationController
       @flags_possible = @entries.count * 7
       @perfect_flag_days = @entries.count{|e|e.flag_score == 7}
       @flag_rate = 100 * (@total_flags / (1.0 * @flags_possible))
-      @perfect_flag_rate = 100 * (@perfect_flag_days / (1.0 * (@days_since_first_entry + 1)))
+      @perfect_flag_rate = 100 * (@perfect_flag_days / (1.0 * @days_since_first_entry))
       if @entries.where.not(weight: nil).last.nil?
         @starting_weight_record = nil
         @most_recent_weight_record = nil
